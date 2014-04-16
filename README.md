@@ -46,42 +46,42 @@
  
 ####实例：
 	if (!error) {  
-    return success;}
+	    return success;}
  
 ####避免:
-if (!error)
-    return success;
+	if (!error)
+	    return success;
  
 ####或者
-if (!error) return success;
+	if (!error) return success;
  
 ###三元运算符
 三元运算符"?"必须在能够提高代码可读性，或者是带来更整洁代码的情况下才能使用。通常只在使用单一条件判断的情况下三元运算符，多重条件判断时，或者使用if语句以便使代码更易理解，或者是将其重构为实例变量。
  
 ####实例:
-result = a > b ? x : y;
+	result = a > b ? x : y;
  
 ####避免：
-result = a > b ? x = c > d ? c : d : y;
+	result = a > b ? x = c > d ? c : d : y;
  
 ###错误处理
  
 如果方法以形参的方式返回错误时，改为直接返回错误值，不必为此引入错误变量。即要根据返回值判断是否错误，而非根据错误变量来直接判断错误是什么。
  
 ####实例:
-NSError *error;
- 
-if (![self trySomethingWithError:&error]) {
-    // Handle Error
-}
+	NSError *error;
+	 
+	if (![self trySomethingWithError:&error]) {
+	    // Handle Error
+	}
  
 ####避免:
->    NSError *error;
- 
-[self trySomethingWithError:&error];
-if (error) {
-    // Handle Error
-}
+	NSError *error;
+	 
+	[self trySomethingWithError:&error];
+	if (error) {
+	    // Handle Error
+	}
  
 上述约定的出发点是有些Apple的API会在成功执行时，在错误参数不为空的情况下向其写入垃圾值，因此针对错误值进行条件判断可能会使得程序走入错误的分支，从而导致后续的程序崩溃。而实际上我们也不能避免自己编写的代码不会出现向错误参数内写入垃圾值。
  
@@ -89,53 +89,50 @@ if (error) {
 在方法的命名中，其作用范围(-/+符号)后保留一个空格。方法的每一个段之间也要保留一个空格。
  
 ####实例：
-- (void)setExampleText:(NSString *)text image:(UIImage *)image;
+	- (void)setExampleText:(NSString *)text image:(UIImage *)image;
  
 ###变量
 变量的命名要尽可能地描述其本来的含义，除了在for()循环中作为循环变量之外，不使用单字母变量名。
  
-"*"作为指针的标识，应当从属于变量，例如，应当写成NSString *text，而非NSString* text或者是NSString * text，常量除外。
+“\*”作为指针的标识，应当从属于变量，例如，应当写成NSString \*text，而非NSString\* text或者是NSString \* text，常量除外。
  
 在任何情况下都尽可能地使用Property定义来代替那些直接的实例变量。只有在初始化方法(例如init，initWithCoder等)，dealloc方法，以及定制化的setter和getter内部使用实例变量。有关在初始化方法和dealloc方法里使用直接的实例变量更详细的信息，请参考[这里](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmPractical.html#//apple_ref/doc/uid/TP40004447-SW6)。
  
 ####实例:
-@interface NYTSection: NSObject
- 
-@property (nonatomic) NSString *headline;
- 
-@end
+	@interface NYTSection: NSObject
+	@property (nonatomic) NSString \*headline;
+	@end
  
 ####避免:
-@interface NYTSection : NSObject {
-    NSString *headline;}
+	@interface NYTSection : NSObject {NSString \*headline;}
  
 ###命名
 尽可能坚持使用Apple的命名约定，尤其是那些涉及到[内存管理规则](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/MemoryMgmt/Articles/MemoryMgmt.html)([NARC](http://stackoverflow.com/a/2865194/340508))的变量和方法。
  
 长且具有自描述能力的变量和方法名是比较适宜的命名方式。
 ####实例:
-UIButton *settingsButton;
+	UIButton *settingsButton;
  
 ####避免：
-UIButton *setBut;
+	UIButton *setBut;
  
 在类名称及变量名称上使用三个字母的前缀(例如NYT)，但是在Core Data实体的命名时可以忽略这一前缀。附带说明一下，由于在Objective-C里不支持命名空间，因此如果使用的Library里有重名的类或者常量等等就会引发很多的问题，加上这样一个前缀就相当于定义了命名空间；Core Data是依附于特定应用的，只要是之前的命名没有重复，就不会存在由于命名空间所导致的重名问题。常量的命名在遵从camel-case的情况下，单词大写(首字母大写或全词大写)，并且加上与之相关的类名作为前缀，以使其更加清晰。
  
 ####实例:
-static const NSTimeInterval NYTArticleViewControllerNavigationFadeAnimationDuration = 0.3;
+	static const NSTimeInterval 	NYTArticleViewControllerNavigationFadeAnimationDuration = 0.3;
  
 ####避免:
-static const NSTimeInterval fadetime = 1.7;
+	static const NSTimeInterval fadetime = 1.7;
  
 属性及局部变量使用camel-case，并且首字母小写。
  
 实例变量使用camel-case，并且首字母小写，以"_"作为前缀。这与LLVM自动合成的实例变量命名方式保持一致。如果LLVM能够自动合成变量，那么可以直接使用。
  
 ####实例:
-@synthesize descriptiveVariableName = _descriptiveVariableName;
+	@synthesize descriptiveVariableName = _descriptiveVariableName;
 
 ####避免:
-id varnm;
+	id varnm;
  
 ###注释
 注释用于在必要时说明为何某一段代码要完成某一功能。如果注释不能够保持最新，就请将其删除。
@@ -146,27 +143,27 @@ id varnm;
 dealloc语句要放在类的实现的最前面，仅次于@synthesize和@dynamic的位置。init方法在任何一个类的实现里都应当放在仅次于dealloc后面的位置。
  
 init方法应当遵循如下的结构：
-- (instancetype)init {
-    self = [super init]; // or call the designated initalizer
-    if (self) {
-        // Custom initialization
-    }
- 
-    return self;}
+	- (instancetype)init {
+	    self = [super init]; // or call the designated initalizer
+	    if (self) {
+	        // Custom initialization
+	    }
+ 	
+	    return self;}
  
 ###字面值
 创建NSString, NSDictionary, NSArray, NSNumber类的不可变实例时，应当使用字面值。特别需要注意的是，nil不能传递给NSDictionary和NSArray字面值，这样做会导致程序的崩溃。
  
 ####实例:
-NSArray *names = @[@"Brian", @"Matt", @"Chris", @"Alex", @"Steve", @"Paul"];
-NSDictionary *productManagers = @{@"iPhone" : @"Kate", @"iPad" : @"Kamal", @"Mobile Web" : @"Bill"};
-NSNumber *shouldUseLiterals = @YES;NSNumber *buildingZIPCode = @10018;
+	NSArray *names = @[@"Brian", @"Matt", @"Chris", @"Alex", @"Steve", @"Paul"];
+	NSDictionary *productManagers = @{@"iPhone" : @"Kate", @"iPad" : @"Kamal", @"Mobile Web" : @"Bill"};
+	NSNumber *shouldUseLiterals = @YES;NSNumber *buildingZIPCode = @10018;
  
 ####避免:
-NSArray *names = [NSArray arrayWithObjects:@"Brian", @"Matt", @"Chris", @"Alex", @"Steve", @"Paul", nil];
-NSDictionary *productManagers = [NSDictionary dictionaryWithObjectsAndKeys: @"Kate", @"iPhone", @"Kamal", @"iPad", @"Bill", @"Mobile Web", nil];
-NSNumber *shouldUseLiterals = [NSNumber numberWithBool:YES];
-NSNumber *buildingZIPCode = [NSNumber numberWithInteger:10018];
+	NSArray *names = [NSArray arrayWithObjects:@"Brian", @"Matt", @"Chris", @"Alex", @"Steve", @"Paul", nil];
+	NSDictionary *productManagers = [NSDictionary dictionaryWithObjectsAndKeys: @"Kate", @"iPhone", @"Kamal", @"iPad", @"Bill", @"Mobile Web", nil];
+	NSNumber *shouldUseLiterals = [NSNumber numberWithBool:YES];
+	NSNumber *buildingZIPCode = [NSNumber numberWithInteger:10018];
  
 ###CGRect函数
 访问CGRect的x，y，height，以及width值时，不要直接访问其结构体成员，而是通过[CGGeomtry](http://developer.apple.com/library/ios/#documentation/graphicsimaging/reference/CGGeometry/Reference/reference.html)所提供的各种[函数](http://developer.apple.com/library/ios/#documentation/graphicsimaging/reference/CGGeometry/Reference/reference.html)进行访问。根据Apple公司的CGGeometry参考：
@@ -174,20 +171,20 @@ NSNumber *buildingZIPCode = [NSNumber numberWithInteger:10018];
 >本参考中所有以CGRect数据结构作为输入的函数，毫无疑问是为了使得那些Rectangle在进行计算并获得结果之前能够被标准化。出于该原因，应用应当避免直接对CGRect数据结构当中所存储的数据进行读写。作为替代，使用本参考所描述的函数去操纵rectangle，并且获取其各类属性值。
  
 ####实例:
-CGRect frame = self.view.frame;
+	CGRect frame = self.view.frame;
  
-CGFloat x = CGRectGetMinX(frame);
-CGFloat y = CGRectGetMinY(frame);
-CGFloat width = CGRectGetWidth(frame);
-CGFloat height = CGRectGetHeight(frame);
+	CGFloat x = CGRectGetMinX(frame);
+	CGFloat y = CGRectGetMinY(frame);
+	CGFloat width = CGRectGetWidth(frame);
+	CGFloat height = CGRectGetHeight(frame);
  
 ####避免:
-CGRect frame = self.view.frame;
+	CGRect frame = self.view.frame;
  
-CGFloat x = frame.origin.x;
-CGFloat y = frame.origin.y;
-CGFloat width = frame.size.width;
-CGFloat height = frame.size.height;
+	CGFloat x = frame.origin.x;
+	CGFloat y = frame.origin.y;
+	CGFloat width = frame.size.width;
+	CGFloat height = frame.size.height;
  
 ###常量
 常量的使用会优于那些在代码中直接插入的字符串或者数字。因为这些常量易于在代码各处重现那些常用的变量，并且可以在无需查询与替换操作的情况下快速进行改变。
@@ -195,32 +192,32 @@ CGFloat height = frame.size.height;
 除非是将常量明确地作为宏，否则必须使用static保留字来声明常量，而非使用#define。
  
 ####实例:
-static NSString * const NYTAboutViewControllerCompanyName = @"The New York Times Company";
- 
-static const CGFloat NYTImageThumbnailHeight = 50.0;
+	static NSString * const NYTAboutViewControllerCompanyName = @"The New York Times Company";
+	 
+	static const CGFloat NYTImageThumbnailHeight = 50.0;
  
 ###避免:
-\#define CompanyName @"The New York Times Company"
- 
-\#define thumbnailHeight 2
+	#define CompanyName @"The New York Times Company"
+	 
+	#define thumbnailHeight 2
  
 ###枚举类型
 使用enum时，建议使用那些新的固定基础类型来进行定义。这些类型一方面有更好的代码完成度，另一方面也具备更强壮的类型检查。SDK现在已经包含有一个名为NS_ENUM()的宏鼓励与促进对于固定基础类型的使用。
  
 ####实例:
-typedef NS_ENUM(NSInteger, NYTAdRequestState) {
-    NYTAdRequestStateInactive,
-    NYTAdRequestStateLoading};
+	typedef NS_ENUM(NSInteger, NYTAdRequestState) {
+	    NYTAdRequestStateInactive,
+	    NYTAdRequestStateLoading};
  
 ###私有属性
 私有属性在类的实现文件中类的扩展部分(anonmyous categories)中加以声明。已经被命名的categories，诸如NYTPrivate或者private都不可使用，除非是对其他类进行扩展。
  
 ####实例:
-@interface NYTAdvertisement ()
- 
-@property (nonatomic, strong) GADBannerView *googleAdView;@property (nonatomic, strong) ADBannerView *iAdView;@property (nonatomic, strong) UIWebView *adXWebView;
- 
-@end
+	@interface NYTAdvertisement ()
+	 
+	@property (nonatomic, strong) GADBannerView *googleAdView;@property (nonatomic, strong) ADBannerView *iAdView;@property (nonatomic, strong) UIWebView *adXWebView;
+	 
+	@end
  
 ###图片命名
 Project当中的图片应当依据统一的规则进行命名，以此保证团队及开发者都可以正确理解其含义。使用camel case进行命名，为其所给出的名称应当充分反映其含义及用途，如果涉及到已有的自定义对象或属性，则在其后加上无前缀的类型或属性名，再其次是对其颜色和/或位置的进一步描述，最后是其状态。
@@ -238,37 +235,37 @@ Project当中的图片应当依据统一的规则进行命名，以此保证团�
 以上的约定能够使得在多个objc文件之间有良好的一致性，并且使得代码有更好更清晰的表达。
  
 ####实例:
-if (!someObject) {}
+	if (!someObject) {}
  
 ####避免:
-if (someObject == nil) {}
+	if (someObject == nil) {}
  
-For a  BOOL , here are two examples:
-if (isAwesome)
-if (![someObject boolValue])
+####布尔值的实例:
+	if (isAwesome)
+	if (![someObject boolValue])
  
-Not:
-if ([someObject boolValue] == NO)
-if (isAwesome == YES) // Never do this.
+####避免:
+	if ([someObject boolValue] == NO)
+	if (isAwesome == YES) // Never do this.
  
 如果一个BOOL类型的属性，其名称已经使用形容词进行定义，则其属性名称可以省略"is"前缀，但是为其指定的get访问器名称仍然要依据惯例保持"is"前缀。
  
-@property (assign, getter=isEditable) BOOL editable;
+	@property (assign, getter=isEditable) BOOL editable;
  
 上面的说明及例子来自于[Cocoa Naming Guidelines](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingIvarsAndTypes.html#//apple_ref/doc/uid/20001284-BAJGIIJE)。
  
 ###Singletons
 Singleton对象要按照进程安全的模式来定义其共享实例。
  
-+ (instancetype)sharedInstance {
-   static id sharedInstance = nil;
- 
-   static dispatch_once_t onceToken;
-   dispatch_once(&onceToken, ^{
-      sharedInstance = [[self alloc] init];
-   });
- 
-   return sharedInstance;}
+	+ (instancetype)sharedInstance {
+	   static id sharedInstance = nil;
+	 
+	   static dispatch_once_t onceToken;
+	   dispatch_once(&onceToken, ^{
+	      sharedInstance = [[self alloc] init];
+	   });
+ 	
+	   return sharedInstance;}
  
 这样有助于防止那些[可能由此引发的，并且在特定情况下会出现的大量崩溃的发生](http://cocoasamurai.blogspot.com/2011/04/singletons-your-doing-them-wrong.html)。
  
