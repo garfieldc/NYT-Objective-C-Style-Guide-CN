@@ -19,24 +19,24 @@
 保持使用"."来访问以及改变对象的属性。括号("[]")推荐用来访问实例的其他部分。
  
 ####实例:  
->    view.backgroundColor = [UIColor orangeColor];  
->    [UIApplication sharedApplication].delegate;
+	view.backgroundColor = [UIColor orangeColor];  
+	[UIApplication sharedApplication].delegate;
 
 ####避免:  
->    [view setBackgroundColor:[UIColor orangeColor]];  
->    UIApplication.sharedApplication.delegate;
+    [view setBackgroundColor:[UIColor orangeColor]];  
+    UIApplication.sharedApplication.delegate;
  
 ###空白
 使用4个空格，而不是一个Tab来进行代码的缩进。请确保在Xcode的preference里对此予以设置。  
 方法体以及其他代码块(if/else/while/switch等)所使用的大括号("{}")，其起始"{"应当与该语句出现在同一行，但是其结束"}"必须在新的一行中出现。
  
 ####实例：
->    if (user.isHappy) {  
->    //Do something  
->}  
->else {  
->    //Do something else  
->}  
+	if (user.isHappy) {  
+    //Do something  
+}  
+else {  
+    //Do something else  
+}  
  
 方法与方法之间应当以一个空行分隔，以使代码在看起来既清晰又有条理。一个方法内部的空白行用于将方法中相互分离的功能加以分隔，但是更合理的做法是将这些相互分离的功能变成新的方法。
 在所有的实现当中，每一个@synthesize或@dynamic都要占据一个单独的行。
@@ -45,7 +45,7 @@
 条件体在任何情况下都应当以大括号包围("{}")，即便是从语法角度上来说该条件提完全不需要使用大括号(例如仅有一条语句的条件体)的情况下也是如此，这样做的目的是为了避免发生[错误](https://github.com/NYTimes/objective-c-style-guide/issues/26#issuecomment-22074256)。这些错误当中包括向if语句当中加入第二行代码，并且期望其成为if语句的一部分，在这种情况下，或者我们加上"{}"以使之符合我们的预期，或者使得这一新增加的语句游离于条件体之外，从而带来非预期的后果。[更严重的缺陷在于](http://programmers.stackexchange.com/a/16530)，如果我们不使用"{}"来包围条件体代码，一旦我们注释掉这个条件体内的语句，那么紧跟着这个条件体的下一条语句就会无意之间成为这个if语句的一部分。另外，这种风格也同时适用于其他类型的条件语句，并且使得代码更加易于检查。
  
 ####实例：
->    if (!error) {  
+	if (!error) {  
     return success;}
  
 ####避免:
