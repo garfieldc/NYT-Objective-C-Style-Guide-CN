@@ -220,7 +220,8 @@ init方法应当遵循如下的结构：
 	@interface NYTAdvertisement ()
 	 
 	@property (nonatomic, strong) GADBannerView *googleAdView;
-	@property (nonatomic, strong) ADBannerView *iAdView;@property (nonatomic, strong) UIWebView *adXWebView;
+	@property (nonatomic, strong) ADBannerView *iAdView;
+	@property (nonatomic, strong) UIWebView *adXWebView;
 	 
 	@end
  
