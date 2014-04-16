@@ -46,7 +46,8 @@
  
 ####实例：
 	if (!error) {  
-	    return success;}
+	    return success;
+	}
  
 ####避免:
 	if (!error)
@@ -100,11 +101,11 @@
  
 ####实例:
 	@interface NYTSection: NSObject
-	@property (nonatomic) NSString \*headline;
+	@property (nonatomic) NSString *headline;
 	@end
  
 ####避免:
-	@interface NYTSection : NSObject {NSString \*headline;}
+	@interface NYTSection : NSObject {NSString *headline;}
  
 ###命名
 尽可能坚持使用Apple的命名约定，尤其是那些涉及到[内存管理规则](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/MemoryMgmt/Articles/MemoryMgmt.html)([NARC](http://stackoverflow.com/a/2865194/340508))的变量和方法。
@@ -119,7 +120,7 @@
 在类名称及变量名称上使用三个字母的前缀(例如NYT)，但是在Core Data实体的命名时可以忽略这一前缀。附带说明一下，由于在Objective-C里不支持命名空间，因此如果使用的Library里有重名的类或者常量等等就会引发很多的问题，加上这样一个前缀就相当于定义了命名空间；Core Data是依附于特定应用的，只要是之前的命名没有重复，就不会存在由于命名空间所导致的重名问题。常量的命名在遵从camel-case的情况下，单词大写(首字母大写或全词大写)，并且加上与之相关的类名作为前缀，以使其更加清晰。
  
 ####实例:
-	static const NSTimeInterval 	NYTArticleViewControllerNavigationFadeAnimationDuration = 0.3;
+	static const NSTimeInterval NYTArticleViewControllerNavigationFadeAnimationDuration = 0.3;
  
 ####避免:
 	static const NSTimeInterval fadetime = 1.7;
@@ -143,13 +144,15 @@
 dealloc语句要放在类的实现的最前面，仅次于@synthesize和@dynamic的位置。init方法在任何一个类的实现里都应当放在仅次于dealloc后面的位置。
  
 init方法应当遵循如下的结构：
+
 	- (instancetype)init {
 	    self = [super init]; // or call the designated initalizer
 	    if (self) {
 	        // Custom initialization
 	    }
  	
-	    return self;}
+	    return self;
+	}
  
 ###字面值
 创建NSString, NSDictionary, NSArray, NSNumber类的不可变实例时，应当使用字面值。特别需要注意的是，nil不能传递给NSDictionary和NSArray字面值，这样做会导致程序的崩溃。
@@ -207,7 +210,8 @@ init方法应当遵循如下的结构：
 ####实例:
 	typedef NS_ENUM(NSInteger, NYTAdRequestState) {
 	    NYTAdRequestStateInactive,
-	    NYTAdRequestStateLoading};
+	    NYTAdRequestStateLoading
+	};
  
 ###私有属性
 私有属性在类的实现文件中类的扩展部分(anonmyous categories)中加以声明。已经被命名的categories，诸如NYTPrivate或者private都不可使用，除非是对其他类进行扩展。
@@ -215,7 +219,8 @@ init方法应当遵循如下的结构：
 ####实例:
 	@interface NYTAdvertisement ()
 	 
-	@property (nonatomic, strong) GADBannerView *googleAdView;@property (nonatomic, strong) ADBannerView *iAdView;@property (nonatomic, strong) UIWebView *adXWebView;
+	@property (nonatomic, strong) GADBannerView *googleAdView;
+	@property (nonatomic, strong) ADBannerView *iAdView;@property (nonatomic, strong) UIWebView *adXWebView;
 	 
 	@end
  
@@ -265,7 +270,8 @@ Singleton对象要按照进程安全的模式来定义其共享实例。
 	      sharedInstance = [[self alloc] init];
 	   });
  	
-	   return sharedInstance;}
+	   return sharedInstance;
+	}
  
 这样有助于防止那些[可能由此引发的，并且在特定情况下会出现的大量崩溃的发生](http://cocoasamurai.blogspot.com/2011/04/singletons-your-doing-them-wrong.html)。
  
