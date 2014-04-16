@@ -32,11 +32,11 @@
  
 ####实例：
 	if (user.isHappy) {  
-    //Do something  
-}  
-else {  
-    //Do something else  
-}  
+	    //Do something  
+	}  
+	else {  
+	    //Do something else  
+	}  
  
 方法与方法之间应当以一个空行分隔，以使代码在看起来既清晰又有条理。一个方法内部的空白行用于将方法中相互分离的功能加以分隔，但是更合理的做法是将这些相互分离的功能变成新的方法。
 在所有的实现当中，每一个@synthesize或@dynamic都要占据一个单独的行。
